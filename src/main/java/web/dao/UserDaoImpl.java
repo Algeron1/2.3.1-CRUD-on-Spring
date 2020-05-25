@@ -4,18 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Transactional;
 import web.model.*;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-@Transactional
 public class UserDaoImpl implements UserDao {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     @Override
@@ -36,15 +38,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(User user) {
         Session session = sessionFactory.getCurrentSession();
-        User user = session.load(User.class, id);
         session.delete(user);
     }
 
     @Override
     public User getUserById(long id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.load(User.class, id);
+        return session.get(User.class, id);
     }
 }

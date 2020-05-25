@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import web.model.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 
@@ -26,9 +27,19 @@ public class UserController {
     }
 
     @GetMapping(value = "/delete=id{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        userService.delete(id);
-        return "redirect:users";
+    public String deleteUser(@PathVariable("id") long id, Model model) {
+        User user;
+        if (id >= 0) {
+            try {
+                user = userService.getUserById(id);
+                userService.delete(user);
+                return "redirect:users";
+            } catch (EntityNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        model.addAttribute("message", "Ошибка, проверьте ID");
+        return "error";
     }
 
     @GetMapping(value = "new")
@@ -44,9 +55,18 @@ public class UserController {
 
     @GetMapping(value = "/edit=id{id}")
     public String editUser(@PathVariable("id") long id, Model model) {
-        User user = userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "user-form";
+        User user;
+        if (id >= 0) {
+            try {
+                user = userService.getUserById(id);
+                model.addAttribute("user", user);
+                return "user-form";
+            } catch (EntityNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        model.addAttribute("message", "Ошибка, проверьте ID");
+        return "error";
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
