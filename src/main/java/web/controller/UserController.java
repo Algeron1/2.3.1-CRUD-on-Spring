@@ -2,14 +2,11 @@ package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import web.service.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import web.model.*;
 
 import java.util.List;
@@ -21,20 +18,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = {"users", "list"}, method = RequestMethod.GET)
+    @GetMapping(value = {"users", "list"})
     public String printUsers(ModelMap model) {
         List<User> users = userService.ListUsers();
         model.addAttribute("listUser", users);
         return "user-list";
     }
 
-    @RequestMapping(value = "/delete=id{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/delete=id{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.delete(id);
         return "redirect:users";
     }
 
-    @RequestMapping(value = "new", method = RequestMethod.GET)
+    @GetMapping(value = "new")
     public String newUser() {
         return "user-form";
     }
@@ -45,7 +42,7 @@ public class UserController {
         return "redirect:users";
     }
 
-    @RequestMapping(value = "/edit=id{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/edit=id{id}")
     public String editUser(@PathVariable("id") long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
