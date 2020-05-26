@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="spring-mvc:war exploded">
-    <output-path>$PROJECT_DIR$/target/Spring_MVC</output-path>
+    <output-path>$PROJECT_DIR$/target/Spring_Security</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
@@ -47,10 +47,15 @@
           <element id="library" level="project" name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.15" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.20" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.2.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.2.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.2.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.2.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.2.0.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/Spring_MVC/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/Spring_Security/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="spring-mvc/web/Web" />
     </root>
