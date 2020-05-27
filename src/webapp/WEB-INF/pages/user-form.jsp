@@ -45,15 +45,15 @@
                 <tr>
                     <th>Имя сотрудника: </th>
                     <td>
-                        <input type="text" name="name" size="45"
-                               value="<c:out value='${user.name}' />"
+                        <input type="text" name="userName" size="45"
+                               value="<c:out value='${user.userName}' />"
                         />
                     </td>
                 </tr>
                 <tr>
                     <th>Пароль: </th>
                     <td>
-                        <input type="password" name="role" size="15"
+                        <input type="password" name="password" size="15"
                                value="<c:out value='${user.password}' />"
                         />
                     </td>
@@ -65,6 +65,7 @@
                 </tr>
             </table>
         </form>
+            <button type="button"><a href="/logout">Выход</a></button>
 </div>
 </body>
 </html>

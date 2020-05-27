@@ -16,6 +16,5 @@ public interface UserService {
 
     User getUserById(long id);
 
-    User getUserByUserName(String username);
 
 }

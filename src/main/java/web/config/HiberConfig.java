@@ -57,6 +57,4 @@ public class HiberConfig {
         transactionManager.setSessionFactory(getSessionFactory().getObject());
         return transactionManager;
     }
-
-
 }

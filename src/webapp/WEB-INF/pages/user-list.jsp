@@ -15,7 +15,7 @@
 <center>
     <h1>Менеджер Пользователей</h1>
     <h2>
-        <a href="/new">Добавить нового пользователя</a>
+        <a href="new">Добавить нового пользователя</a>
         &nbsp;&nbsp;&nbsp;
         <a href="list">Список всех пользователей</a>
 
@@ -27,23 +27,24 @@
         <tr>
             <th>ID</th>
             <th>Имя</th>
-            <th>Категория</th>
+            <th>Пароль</th>
             <th>Что сделать</th>
         </tr>
         <%--@elvariable id="listUser" type="java.util.List"--%>
         <c:forEach var="user" items="${listUser}">
             <tr>
                 <td><c:out value="${user.id}" /></td>
-                <td><c:out value="${user.name}" /></td>
-                <td><c:out value="${user.role}" /></td>
+                <td><c:out value="${user.userName}" /></td>
+                <td><c:out value="${user.password}" /></td>
                 <td>
-                    <a href="/edit=id<c:out value='${user.id}' />">Редактировать</a>
+                    <a href="edit=id<c:out value='${user.id}' />">Редактировать</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/delete=id<c:out value='${user.id}' />">Удалить</a>
+                    <a href="delete=id<c:out value='${user.id}' />">Удалить</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
+    <button type="button"><a href="/logout">Выход</a></button>
 </div>
 </body>
 </html>
