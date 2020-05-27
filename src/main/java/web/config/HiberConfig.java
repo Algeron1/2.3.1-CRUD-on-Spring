@@ -1,5 +1,6 @@
 package web.config;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import web.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +47,7 @@ public class HiberConfig {
         props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setAnnotatedClasses(User.class, Role.class);
         return factoryBean;
     }
 
@@ -56,4 +57,6 @@ public class HiberConfig {
         transactionManager.setSessionFactory(getSessionFactory().getObject());
         return transactionManager;
     }
+
+
 }

@@ -1,6 +1,7 @@
 package web.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -47,5 +48,11 @@ public class UserDaoImpl implements UserDao {
     public User getUserById(long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(User.class, id);
+    }
+
+    @Override
+    public User getUserByUserName(String userName){
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, userName);
     }
 }

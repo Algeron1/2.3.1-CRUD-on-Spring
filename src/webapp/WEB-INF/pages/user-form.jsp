@@ -51,10 +51,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Категория: </th>
+                    <th>Пароль: </th>
                     <td>
-                        <input type="text" name="role" size="15"
-                               value="<c:out value='${user.role}' />"
+                        <input type="password" name="role" size="15"
+                               value="<c:out value='${user.password}' />"
                         />
                     </td>
                 </tr>
