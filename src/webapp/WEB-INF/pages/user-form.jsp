@@ -65,6 +65,8 @@
                 </tr>
             </table>
         </form>
+
+
             <button type="button"><a href="/logout">Выход</a></button>
 </div>
 </body>

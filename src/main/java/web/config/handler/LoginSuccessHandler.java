@@ -11,7 +11,6 @@ import web.model.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
@@ -23,11 +22,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-        if (roles.contains("ROLE_ADMIN")) {
+
+        if (roles.contains("ROLE_ADMIN") && roles.contains("ROLE_USER")) {
             httpServletResponse.sendRedirect("admin/list");
-        }
-        else if(roles.contains("ROLE_USER")){
-            httpServletResponse.sendRedirect("hello");
+        } else if (roles.contains("ROLE_USER")) {
+            httpServletResponse.sendRedirect("user/hello");
         }
     }
 }

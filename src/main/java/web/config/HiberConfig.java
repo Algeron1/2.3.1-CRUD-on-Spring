@@ -1,6 +1,5 @@
 package web.config;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import web.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

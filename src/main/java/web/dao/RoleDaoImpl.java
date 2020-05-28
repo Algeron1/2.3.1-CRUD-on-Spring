@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import web.model.Role;
 
 @Repository
-public class RoleDaoImpl implements RoleDao{
+public class RoleDaoImpl implements RoleDao {
 
     @Autowired
     private final SessionFactory sessionFactory;
