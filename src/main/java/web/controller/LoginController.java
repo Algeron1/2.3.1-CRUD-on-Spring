@@ -15,9 +15,12 @@ public class LoginController {
     public String printWelcome(ModelMap model) {
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<String> messages = new ArrayList<>();
+        List<User> users = new ArrayList<>();
+        users.add(authUser);
         messages.add("Hello! " + authUser.getUserName());
         messages.add("I'm Spring MVC-SECURITY application");
         messages.add("5.2.0 version by sep'19 ");
+        model.addAttribute("allUsers", users);
         model.addAttribute("messages", messages);
         return "hello";
     }

@@ -28,7 +28,7 @@
         <tr>
             <th>ID</th>
             <th>Имя</th>
-            <th>Пароль</th>
+            <th>Роль</th>
             <th>Что сделать</th>
         </tr>
         <%--@elvariable id="listUser" type="java.util.List"--%>
@@ -36,7 +36,9 @@
             <tr>
                 <td><c:out value="${user.id}" /></td>
                 <td><c:out value="${user.userName}" /></td>
-                <td><c:out value="${user.password}" /></td>
+                <td>
+                    <c:forEach items="${user.roles}" var="role">${role.name}; </c:forEach>
+                </td>
                 <td>
                     <a href="edit=id<c:out value='${user.id}' />">Редактировать</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;

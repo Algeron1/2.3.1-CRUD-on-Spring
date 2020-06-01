@@ -56,6 +56,14 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoleSet();
@@ -70,6 +78,7 @@ public class User implements UserDetails {
     public String getUsername() {
         return userName;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
