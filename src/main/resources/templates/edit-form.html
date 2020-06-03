@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<head>
+    <title>Менеджер пользователей</title>
+</head>
+<body>
+<center>
+    <h1>Менеджер пользователей</h1>
+    <h2>
+        <a href="new">Добавить нового сотрудника</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="list">Список всех сотрудников</a>
+
+    </h2>
+</center>
+<div align="center">
+    <form action="#" th:action="@{update}" th:object="${user}"
+          method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>ID:</td>
+                <td>
+                    <input type="text" th:field="*{id}" readonly="readonly" />
+                </td>
+            </tr>
+            <tr>
+                <td>Имя:</td>
+                <td><input type="text" th:field="*{userName}" /></td>
+            </tr>
+            <tr>
+                <td>Пароль:</td>
+                <td><input type="text" th:field="*{password}" /></td>
+            </tr>
+            <tr>
+            <td colspan="2"><button type="submit">Редактировать</button> </td>
+            </tr>
+        </table>
+    </form>
+
+
+    <button type="button"><a href="/logout">Выход</a></button>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello!</title>
+</head>
+<body>
+<tr th:each=" msq : ${messages}">
+    <h1>
+        <td th:text= ${msq}></td>
+    </h1>
+</tr>
+
+<tr th:each="user : ${allUsers}">
+
+    <h1>
+        <td th:text="${user.roles}"></td>
+    </h1>
+
+</tr>
+<button type="button"><a href="/logout">Выход</a></button>
+</body>
+</html>

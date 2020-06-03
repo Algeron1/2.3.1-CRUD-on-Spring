@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+    <h1>Менеджер Пользователей</h1>
+    <h2>
+        <a href="new">Добавить нового пользователя</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="list">Список всех пользователей</a>
+
+    </h2>
+</center>
+<div align="center">
+    <table border="1" cellpadding="5">
+        <caption><h2>Список Пользователей</h2></caption>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Роль</th>
+            <th>Что сделать</th>
+        </tr>
+        <tr th:each="user : ${listUser}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.roles}"></td>
+            <td>
+                <a th:href="@{edit=id{id}(id=${user.id})}">Редактировать</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a th:href="@{delete=id{id}(id=${user.id})}">Удалить</a>
+           </td>
+        </tr>
+    </table>
+    <button type="button"><a href="/logout">Выход</a></button>
+</div>
+</body>
+</html>

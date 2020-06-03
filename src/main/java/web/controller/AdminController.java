@@ -1,6 +1,7 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +40,14 @@ public class AdminController {
     }
 
     @GetMapping(value = "admin/new")
-    public String newUser() {
+    public String newUser(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
         return "user-form";
     }
 
     @RequestMapping(value = "admin/insert", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute User user, ModelMap model) {
+    public String addUser(@ModelAttribute("user") User user, ModelMap model) {
         User userFromDb = (User) userDetailsService.loadUserByUsername(user.getUserName());
         if (userFromDb != null) {
             model.addAttribute("message", "Такой пользователь уже существует");
@@ -59,7 +62,7 @@ public class AdminController {
         User user;
         if (id >= 0 && (user = userService.getUserById(id)) != null) {
             model.addAttribute("user", user);
-            return "user-form";
+            return "edit-form";
         }
         model.addAttribute("message", "Ошибка, проверьте ID");
         return "error";
