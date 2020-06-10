@@ -35,10 +35,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void add(User user) {
+    public void add(User user, int roleId) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getRoleById(1));
+        roles.add(roleDao.getRoleById(roleId));
+        if(roleId==2){
+            roles.add(roleDao.getRoleById(1));
+        }
         user.setRoleSet(roles);
         userDao.add(user);
     }
@@ -50,9 +53,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void update(User user) {
+    public void update(User user, int role) {
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getRoleById(1));
+        roles.add(roleDao.getRoleById(role));
+        if(role==2){
+            roles.add(roleDao.getRoleById(1));
+        }
         user.setRoleSet(roles);
         userDao.update(user);
     }
@@ -76,6 +82,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 return user;
             }
         }
-        return null;
+        throw new UsernameNotFoundException("User is not exist");
     }
 }
