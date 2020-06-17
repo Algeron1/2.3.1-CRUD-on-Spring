@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import web.dao.RoleDao;
-import web.dao.UserDao;
 import web.model.*;
+import web.repository.RoleRepository;
+import web.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,62 +21,62 @@ import java.util.Set;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
     @Autowired
-    private final RoleDao roleDao;
+    private final RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao, RoleDao roleDao) {
-        this.userDao = userDao;
-        this.roleDao = roleDao;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public void add(User user, int roleId) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getRoleById(roleId));
-        if(roleId==2){
-            roles.add(roleDao.getRoleById(1));
+        roles.add(roleRepository.getRoleById(roleId));
+        if (roleId == 2) {
+            roles.add(roleRepository.getRoleById(1));
         }
         user.setRoleSet(roles);
-        userDao.add(user);
+        userRepository.save(user);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> ListUsers() {
-        return userDao.ListUsers();
+    public List<User> listUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public void update(User user, int role) {
+    public void update(User user, int roleId) {
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getRoleById(role));
-        if(role==2){
-            roles.add(roleDao.getRoleById(1));
+        roles.add(roleRepository.getRoleById(roleId));
+        if (roleId == 2) {
+            roles.add(roleRepository.getRoleById(1));
         }
         user.setRoleSet(roles);
-        userDao.update(user);
+        userRepository.save(user);
     }
 
     @Override
     public void delete(User user) {
-        userDao.delete(user);
+        userRepository.delete(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public User getUserById(long id) {
-        return userDao.getUserById(id);
+        return userRepository.getUserById(id);
     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        List<User> userList = userDao.ListUsers();
+        List<User> userList = userRepository.findAll();
         for (User user : userList) {
             if (user.getUserName().equals(s)) {
                 return user;
@@ -84,4 +84,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         throw new UsernameNotFoundException("User is not exist");
     }
+
 }

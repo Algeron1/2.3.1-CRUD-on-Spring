@@ -19,17 +19,17 @@
 <!--Верхний навбар -->
 <nav class="navbar navbar-dark bg-dark">
     <ul class="list-inline-group text-left m-md-0 p-0">
-        <tr th:each="authuser : ${authUser}">
+        <tr >
             <li class="list-inline-item font-weight-bold" style="color: white">
-                <h3><b>
-                    <td th:text="${authuser.userName}"></td>
+                <h3><b id="userMail">
+                    <td></td>
                 </b></h3>
             </li>
             <li class="list-inline-item" style="color: white"><h3>with roles: </h3></li>
             <li class="list-inline-item" style="color: white">
-                <h3>
-                    <td th:each="role: ${authuser.roles}" th:text="${role.toString()}">
-                </h3>
+                <h3><b id="userRole">
+                    <td >
+                </b></h3>
                 </td></li>
     </ul>
     <button class="btn btn-dark" type="submit"><a href="/logout" class="btn btn-dark">Logout</a></button>
@@ -58,17 +58,8 @@
                         <th>Role</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr th:each="user1 : ${authUser}">
-                        <th scope="row" th:text="${user1.id}"></th>
-                        <td th:text="${user1.firstName}"></td>
-                        <td th:text="${user1.lastName}"></td>
-                        <td th:text="${user1.age}"></td>
-                        <td th:text="${user1.userName}"></td>
-                        <td>
-                            <div th:each="role : ${user1.roles}" th:text="${role}"></div>
-                        </td>
-                    </tr>
+                    <tbody id="thisUser">
+
                     </tbody>
                 </table>
             </div>
@@ -84,5 +75,43 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        let s = "";
+        let user = null;
+        $.ajax({
+            url: '/head',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                user = data;
+                for (let i in user.roles) {
+                    s += user.roles[i].name.toString() + " ";
+                }
+                userInfo(data);
+                $("#userMail").text(user.userName);
+                $("#userRole").text(s);
+                $('#adminButton').click();
+                $('#userTab').click();
+            }
+        });
+    });
+    <!--данные о юзере-->
+    function userInfo(data) {
+        let roles = "";
+        for (let i in data.roles) {
+            roles += data.roles[i].name + " ";
+        }
+        $("#thisUser").append(
+            "<tr>" +
+            "<th scope='row'>" + data.id + "</th>" +
+            "<td>" + data.firstName + "</td>" +
+            "<td>" + data.lastName + "</td>" +
+            "<td>" + data.age + "</td>" +
+            "<td>" + data.userName + "</td>" +
+            "<td style='text-transform: uppercase'>" + roles + "</td>" +
+            "</tr>");
+    }
+</script>
 </body>
 </html>

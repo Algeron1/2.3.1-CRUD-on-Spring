@@ -1,23 +1,18 @@
 package web.controller;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import web.model.Role;
-import web.model.User;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 public class LoginController {
-    @RequestMapping(value = "user/hello", method = RequestMethod.GET)
-    public String printWelcome(ModelMap model) {
-        model.addAttribute("authUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String printWelcome() {
+        return "user-list";
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String printUser() {
         return "hello";
     }
 
