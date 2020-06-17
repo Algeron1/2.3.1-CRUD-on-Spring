@@ -39,7 +39,7 @@
     <div class="row">
         <ul class="nav nav-pills flex-column col-md-2" role="tablist">
 
-            <li><a href="#user" class="nav-link" data-toggle="pill">User</a></li>
+            <li><a href="#user" id="userButton" class="nav-link" data-toggle="pill">User</a></li>
         </ul>
         <!-- юзер панель -->
         <div class="tab-content col-md-10">
@@ -80,7 +80,7 @@
         let s = "";
         let user = null;
         $.ajax({
-            url: '/head',
+            url: 'api/head',
             type: 'get',
             dataType: 'json',
             success: function (data) {
@@ -91,8 +91,7 @@
                 userInfo(data);
                 $("#userMail").text(user.userName);
                 $("#userRole").text(s);
-                $('#adminButton').click();
-                $('#userTab').click();
+                $('#userButton').click();
             }
         });
     });

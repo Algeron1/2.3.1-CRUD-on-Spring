@@ -200,7 +200,7 @@
         function () {
             let add_u = $("#addNUser").serialize();
             $.ajax({
-                url: "/addUser",
+                url: "api/addUser",
                 type: "post",
                 data: add_u,
                 success: function () {
@@ -220,7 +220,7 @@
         let s = "";
         let user = null;
         $.ajax({
-            url: '/head',
+            url: 'api/head',
             type: 'get',
             dataType: 'json',
             success: function (data) {
@@ -236,7 +236,7 @@
                 show();
             },
             error: function(){
-                alert('Такой пользователь уже существует, смени Email');
+                alert('Ошибка в хедере');
             }
         });
     });
@@ -244,7 +244,7 @@
     <!--таблица юзеров-->
     function show() {
         $.ajax({
-            url: '/users',
+            url: 'api/users',
             type: 'get',
             dataType: 'json',
             success: function (data) {
@@ -305,7 +305,7 @@
         var id = id.id;
         var edit = $("#formForEdit").serialize();
         $.ajax({
-            url: "/editUser/" + id,
+            url: "api/editUser/" + id,
             type: "post",
             data: edit,
             success: function (data) {
@@ -318,11 +318,11 @@
 
     // заполнение модалки
     function fillFormForEditAndDelete(data) {
-        var id = data.id;
+        let id = data.id;
         $(".deleteButton").attr("id", id);
         $("#exampleModal, .modal_bg").addClass("show").css('display', 'block');
 
-        for (var i = 0; i < allUsers.length; i++) {
+        for (let i = 0; i < allUsers.length; i++) {
             if (allUsers[i].id == id) {
                 $("#d_id").val(allUsers[i].id);
                 $("#d_name").val(allUsers[i].firstName);
@@ -351,7 +351,7 @@
     function deleteU(data) {
         let id = data.id;
         $.ajax({
-            url: "/deleteUser/" + id,
+            url: "api/deleteUser/" + id,
             type: "delete",
             success: function (data) {
                 $("#usersTable").empty();
