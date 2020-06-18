@@ -1,6 +1,6 @@
-package web.service;
+package crud.service;
 
-import web.model.User;
+import crud.model.User;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface UserService {
 
     void update(User user, int role);
 
-    void delete(User user);
+    void delete(Long id);
 
     User getUserById(long id);
 

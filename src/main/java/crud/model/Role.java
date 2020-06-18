@@ -1,4 +1,4 @@
-package web.model;
+package crud.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Role implements GrantedAuthority {
 
     @Id
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -18,11 +18,11 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

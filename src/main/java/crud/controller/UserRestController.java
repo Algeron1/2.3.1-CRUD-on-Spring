@@ -1,12 +1,12 @@
-package web.controller;
+package crud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import web.service.*;
-import web.model.*;
+import crud.service.*;
+import crud.model.*;
 
 import java.util.List;
 
@@ -26,13 +26,13 @@ public class UserRestController {
     }
 
     @DeleteMapping(value = "api/deleteUser/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
-        User user = userService.getUserById(id);
+    public ResponseEntity<?> delete(@PathVariable(name = "id") long id) {
         try {
-            userService.delete(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            userService.delete(id);
+            return new ResponseEntity<List<User>>(HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -56,12 +56,6 @@ public class UserRestController {
 
     @PostMapping(value = "api/addUser")
     public ResponseEntity<?> addUser(@ModelAttribute User user, @RequestParam(value = "new_roles", defaultValue = "user") List<String> roles) {
-        List<User> users = userService.listUsers();
-        for(User iterateUser : users){
-            if(user.getUserName().equals(iterateUser.getUserName())){
-                return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-            }
-        }
         int roleId = 1; //роль по умолчанию
         if (roles.contains("admin")) {
             roleId = 2;
