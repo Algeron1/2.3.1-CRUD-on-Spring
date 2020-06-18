@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import web.repository.RoleRepository;
 import web.service.*;
 import web.model.*;
 
-import java.util.List;
+import javax.persistence.Entity;
+import java.util.*;
 
 
 @RestController("/api")
@@ -16,6 +18,14 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    private Role roleForAdd=null;
+
+    private Role roleForUpdate=null;
+
 
     @GetMapping(value = "api/users")
     public ResponseEntity<List<User>> getUsers() {
@@ -25,8 +35,8 @@ public class UserRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "api/deleteUser/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
+    @PostMapping(value = "api/deleteUser/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         User user = userService.getUserById(id);
         try {
             userService.delete(user);
@@ -37,12 +47,9 @@ public class UserRestController {
     }
 
     @PostMapping(value = "api/editUser/{id}")
-    public ResponseEntity<?> editUser(
-            @PathVariable(name = "id") Long id,
-            @ModelAttribute User user,
-            @RequestParam(value = "e_roles", defaultValue = "user") List<String> roles) {
+    public ResponseEntity<?> editUser(@RequestBody User user) {
         int roleId = 1; //роль по умолчанию
-        if (roles.contains("admin")) {
+        if (roleForUpdate.toString().equalsIgnoreCase("admin ")) {
             roleId = 2;
         }
         try {
@@ -54,8 +61,9 @@ public class UserRestController {
         }
     }
 
-    @PostMapping(value = "api/addUser")
-    public ResponseEntity<?> addUser(@ModelAttribute User user, @RequestParam(value = "new_roles", defaultValue = "user") List<String> roles) {
+    @RequestMapping(value = "api/addUser")
+    @ResponseBody
+    public ResponseEntity<?> addUser(@RequestBody User user) {
         List<User> users = userService.listUsers();
         for(User iterateUser : users){
             if(user.getUserName().equals(iterateUser.getUserName())){
@@ -63,15 +71,15 @@ public class UserRestController {
             }
         }
         int roleId = 1; //роль по умолчанию
-        if (roles.contains("admin")) {
+        if (roleForAdd.toString().equalsIgnoreCase("admin")) {
             roleId = 2;
         }
         userService.add(user, roleId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "api/user/{id}")
-    public ResponseEntity<User> read(@PathVariable(name = "id") Long id) {
+    @RequestMapping(value = "api/user/{id}")
+    public ResponseEntity<User> read(@PathVariable(name = "id") Long id){
         User client = userService.getUserById(id);
         return client != null
                 ? new ResponseEntity<>(client, HttpStatus.OK)
@@ -82,5 +90,17 @@ public class UserRestController {
     public ResponseEntity<User> getUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "api/roleForAdd")
+    private ResponseEntity<Role> getRoleForAdd(@RequestBody Role role) {
+       roleForAdd=role;
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "api/roleForUpdate")
+    private ResponseEntity<Role> getRoleForUpdate(@RequestBody Role role) {
+        roleForUpdate=role;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
